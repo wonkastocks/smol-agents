@@ -16,27 +16,36 @@ def search_web(query, max_results=5):
     """
     print(f"Searching for: {query}")
     try:
+        # Create a DuckDuckGo search session
         with DDGS() as ddgs:
+            # Perform the text search and convert results to a list
             results = list(ddgs.text(query, max_results=max_results))
             return results
     except Exception as e:
+        # Handle any errors that occur during the search
         print(f"Error searching: {e}")
         return []
 
 def main():
     """
-    Main function to demonstrate web search capabilities.
-    - Performs a search for NFL team predictions
-    - Falls back to an alternative query if no results are found
-    - Prints formatted search results
+    Main function to demonstrate web search functionality.
+    
+    This function:
+    1. Defines an initial search query
+    2. Performs the search
+    3. If no results are found, tries a fallback query
+    4. Displays the search results in a formatted manner
     """
+    # Initial search query
     query = "top NFL teams predictions 2025 season AFC NFC"
     results = search_web(query)
     
+    # Try a fallback query if the first one returns no results
     if not results:
         print("No search results found. Trying alternative query...")
         results = search_web("2025 NFL season predictions top teams")
     
+    # Display results if found
     if results:
         print("\n===== SEARCH RESULTS =====\n")
         for i, result in enumerate(results, 1):
@@ -48,5 +57,6 @@ def main():
     else:
         print("Could not find any search results.")
 
+# Execute the main function if this script is run directly
 if __name__ == "__main__":
     main()
